@@ -1,0 +1,587 @@
+{
+  libs: {
+    radio: {
+        import: 'from radio import Radio',
+        instance: 'Radio()'
+    }
+  },
+  blocks: [
+    "## $$stemcft_title_board",
+    {
+        opcode: 'button',
+        blockType: 'boolean',
+        text: "$$stemcft_button",
+        arguments: {
+            BTN: {
+                type: 'string',
+                defaultValue: 'a',
+                menu: 'button'
+            }
+        },
+        pycode: 'gb.button([BTN])',
+    },
+    {
+        opcode: 'imu',
+        blockType: 'reporter',
+        text: "$$stemcft_imu",
+        arguments: {
+            AXIS: {
+                type: 'string',
+                defaultValue: 'X',
+                menu: 'xyz'
+            }
+        },
+        pycode: 'gb.imu.acc([AXIS])',
+    },
+    {
+        opcode: 'pitchroll',
+        blockType: 'reporter',
+        text: "$$stemcft_pitchroll",
+        arguments: {
+            PITCHROLL: {
+                type: 'string',
+                defaultValue: 'pitch',
+                menu: 'pitchroll'
+            }
+        },
+        pycode: 'gb.imu.attitude([PITCHROLL])',
+    },
+    {
+        opcode: 'gesture',
+        blockType: 'boolean',
+        text: "$$stemcft_gesture",
+        disableMonitor: 1,
+        arguments: {
+            GESTURE: {
+                type: 'string',
+                defaultValue: 'shake',
+                menu: 'gesture'
+            }
+        },
+        pycode: 'gb.imu.gesture([GESTURE])',
+    },
+    "## $$stemcft_title_pin",
+    {
+        opcode: 'digitalwrite',
+        blockType: 'command',
+        text: "$$stemcft_digitalwrite",
+        arguments: {
+            PIN: {
+                type: 'string',
+                defaultValue: 'p1',
+                menu: 'padPin'
+            },
+            VALUE: {
+                type: 'number',
+                menu: 'level',
+                defaultValue: 1
+            }
+        },
+        pycode: 'gb.digiWrite([PIN],[VALUE])'
+    },
+    {
+        opcode: 'analogwrite',
+        blockType: 'command',
+
+        text: "$$stemcft_analogwrite",
+        arguments: {
+            PIN: {
+                type: 'string',
+                menu: 'padPin',
+                defaultValue: 'p1',
+            },
+            VALUE: {
+                type: 'slider',
+                defaultValue: 150,
+				min: 0,
+                max: 1023
+            }
+        },
+        pycode: 'gb.pwm([PIN],[VALUE])'
+    },
+    {
+        opcode: 'digitalread',
+        blockType: 'Boolean',
+        text: "$$stemcft_digitalread",
+        arguments: {
+            PIN: {
+                type: 'string',
+                defaultValue: 'p1',
+                menu: 'padPin'
+            }
+        },
+        pycode: 'gb.digiRead([PIN])'
+    },
+    {
+        opcode: 'touchread',
+        blockType: 'boolean',
+        text: "$$stemcft_touchread",
+        arguments: {
+            PIN: {
+                type: 'string',
+                defaultValue: 'p1',
+                menu: 'padPin'
+            }
+        },
+        pycode: 'gb.touch([PIN]) > 100'
+    },
+    {
+        opcode: 'analogread',
+        blockType: 'reporter',
+
+        text: "$$stemcft_analogread",
+        arguments: {
+            PIN: {
+                type: 'string',
+                defaultValue: 'p1',
+                menu: 'padPin'
+            }
+        },
+        pycode: 'gb.analogread([PIN])'
+    },
+    // {
+    //     opcode: 'luminance',
+    //     blockType: 'reporter',
+    //     text: "$$stemcft_luminance",
+    //     pycode: 'gb.getLight()',
+    //     disableMonitor: 1,
+    //     sepafter: 36
+    // },
+    '## $$stemcft_title_pixel',
+    {
+        opcode: 'pixel',
+        blockType: 'command',
+        text: "$$stemcft_pixel",
+        arguments: {
+            P1: {
+                type: 'colorrgb',
+                defaultValue: '#FF8000',
+                hook: 'COLOR'
+            },
+            P2: {
+                type: 'colorrgb',
+                defaultValue: '#FF8000',
+                hook: 'COLOR'
+            },
+            P3: {
+                type: 'colorrgb',
+                defaultValue: '#FF8000',
+                hook: 'COLOR'
+            },
+            P4: {
+                type: 'colorrgb',
+                defaultValue: '#FF8000',
+                hook: 'COLOR'
+            }
+        },
+        pycode: 'gb.setRGB([P1],[P2],[P3],[P4])',
+    },
+    {
+        opcode: 'pixeltonum',
+        blockType: 'command',
+        text: "$$stemcft_pixeltonum",
+        arguments: {
+            NUM: {
+                type: 'number',
+                defaultValue: 1,
+                menu: 'pixNum'
+            },
+            COLOR: {
+                type: 'colorrgb',
+                defaultValue: '#FF8000',
+                hook: 'COLOR'
+            }
+        },
+        pycode: 'gb.setRGBN([NUM],[COLOR])',
+    },
+    {
+        opcode: 'pixelall',
+        blockType: 'command',
+        text: "$$stemcft_pixelall",
+        arguments: {
+            COLOR: {
+                type: 'colorrgb',
+                defaultValue: '#FF8000',
+                hook: 'COLOR'
+            }
+        },
+        pycode: 'gb.setRGBAll([COLOR])',
+    },
+    {
+        opcode: 'pixleallrgb',
+        blockType: 'command',
+        text: "$$stemcft_pixleallrgb",
+        arguments: {
+            R: {
+                type: 'number',
+                defaultValue: 255,
+                min: 0,
+                max: 255
+            },
+            G: {
+                type: 'number',
+                defaultValue: 128,
+                min: 0,
+                max: 255
+            },
+            B: {
+                type: 'number',
+                defaultValue: 0,
+                min: 0,
+                max: 255
+            }
+        },
+        pycode: 'gb.setRGBAll(([R],[G],[B]))',
+    },
+    {
+        opcode: 'pixelclear',
+        blockType: 'command',
+        text: "$$stemcft_pixelclear",
+        pycode: 'gb.setRGBAll((0,0,0))'
+    },
+    "## $$stemcft_title_motor",
+    {
+        opcode: 'motor',
+        blockType: 'command',
+        text: "$$stemcft_motor",
+        arguments: {
+            MOT: {
+                type: 'string',
+                defaultValue: '1',
+                menu: 'motor'
+            },
+            SPEED: {
+                type: 'slider',
+                defaultValue: 50,
+                min: 0,
+                max: 100
+            }
+        },
+        pycode: 'gb.motor([MOT], [SPEED])',
+    },
+    {
+        opcode: 'motorDual',
+        blockType: 'command',
+        text: "$$stemcft_motordual",
+        arguments: {
+            SPEED1: {
+                type: 'slider',
+                defaultValue: 50,
+                min: 0,
+                max: 100
+            },
+            SPEED2: {
+                type: 'slider',
+                defaultValue: 50,
+                min: 0,
+                max: 100
+            }
+        },
+        pycode: 'gb.motorDual([SPEED1], [SPEED2])',
+    },
+    "## $$stemcft_title_buzzer",
+    {
+        opcode: 'buzz',
+        blockType: 'command',
+        text: "$$stemcft_buzz",
+        arguments: {
+            HZ: {
+                type: 'number',
+                defaultValue: '200',
+            },
+            DELAY: {
+                type: 'number',
+                defaultValue: '1'
+            }
+        },
+        pycode: 'gb.buzz.tone([HZ],[DELAY])',
+    },
+    {
+        opcode: 'buzzcontinueplay',
+        blockType: 'command',
+        text: "$$stemcft_buzzcontinueplay",
+        arguments: {
+            HZ: {
+                type: 'number',
+                defaultValue: '200',
+            }
+        },
+        pycode: 'gb.buzz.tone([HZ], -1)',
+    },
+    {
+        opcode: 'music',
+        blockType: 'command',
+        text: "$$stemcft_music",
+        arguments: {
+            MELODY: {
+                type: 'string',
+                defaultValue: 'r4:2 g g g eb:8 r:2 f f f d:8 ',
+            }
+        },
+        pycode: 'gb.buzz.melody([MELODY])',
+    },
+    {
+        opcode: 'melody',
+        blockType: 'command',
+        text: "$$stemcft_melody",
+        arguments: {
+            MELODY: {
+                type: 'string',
+                menu: 'TONEMENU',
+                defaultValue: '1',
+            }
+        },
+        pycode: 'gb.buzz.melody([MELODY])',
+    },
+    {
+        opcode: 'buzzstop',
+        blockType: 'command',
+        text: "$$stemcft_buzzstop",
+        pycode: 'gb.buzz.stop()'
+    },
+    "## $$stemcft_title_radio",
+    {
+        opcode: 'radio_channel',
+        blockType: 'command',
+        text: "$$stemcft_radio_channel",
+        arguments: {
+            CHANNEL: {
+                type: 'slider',
+                defaultValue: 1,
+                min: 1,
+                max: 13
+            }
+        },
+        pycode: 'radio.channel = [CHANNEL]',
+    },
+    {
+        opcode: 'redio_read',
+        blockType: 'reporter',
+        text: "$$stemcft_radio_read",
+        pycode: 'radio.read()'
+    },
+    {
+        opcode: 'radio_readtimeout',
+        blockType: 'reporter',
+        text: "$$stemcft_radio_readtimeout",
+        arguments: {
+            TIMEOUT: {
+                type: 'number',
+                defaultValue: 5000
+            }
+        },
+        pycode: 'radio.read(timeout=[TIMEOUT])'
+    },
+    {
+        opcode: 'radio_send',
+        blockType: 'command',
+        text: "$$stemcft_radio_send",
+        arguments: {
+            DATA: {
+                type: 'string',
+                defaultValue: 'hello'
+            }
+        },
+        pycode: 'radio.send([DATA])'
+    },
+    '## $$stemcft_title_wifi',
+    {
+        opcode: 'wifi',
+        blockType: 'command',
+        text: "$$stemcft_wifi",
+        arguments: {
+            AP: {
+                type: 'string',
+                defaultValue: 'Kittenbot',
+            },
+            PASS: {
+                type: 'string!',
+                defaultValue: '123123'
+            }
+        },
+        pycode: 'gb.wifi.connect([AP],[PASS])',
+    },
+    {
+        opcode: 'ipaddr',
+        blockType: 'reporter',
+        text: "$$stemcft_ipaddr",
+        disableMonitor: 1,
+        pycode: 'gb.wifi.ipaddr()',
+    },
+    {
+        opcode: 'mqttconnect',
+        blockType: 'command',
+        text: "$$stemcft_mqttconn",
+        pycode: 'gb.wifi.mqttConnect()',
+    },
+    {
+        opcode: 'mqttconnectserver',
+        blockType: 'command',
+        text: "$$stemcft_mqttconnserver",
+        // TODO: user pass deaultValue is None
+        arguments: {
+            SERVER: {
+                type: 'string',
+                defaultValue: 'iot.kittenbot.cn',
+            },
+            ID: {
+                type: 'string',
+                defaultValue: 'ClientId',
+            },
+            USER: {
+                type: 'string',
+                defaultValue: '',
+            },
+            PASS: {
+                type: 'string',
+                defaultValue: '',
+            }
+        },
+        pycode: 'gb.wifi.mqttConnect(host=[SERVER], port=1883, id=[ID] ,user=[USER], password=[PASS])',
+    },
+    {
+        opcode: 'mqttsub',
+        blockType: 'command',
+        text: "$$stemcft_mqttsub",
+        arguments: {
+            TOPIC: {
+                type: 'string',
+                defaultValue: 'topic1',
+            }
+        },
+        pycode: 'gb.wifi.mqttSub([TOPIC])',
+    },
+    {
+        opcode: 'mqttpub',
+        blockType: 'command',
+        text: "$$stemcft_mqttpub",
+        arguments: {
+            TOPIC: {
+                type: 'string',
+                defaultValue: 'topic1',
+            },
+            DATA: {
+                type: 'string',
+                defaultValue: 'helloworld',
+            },
+        },
+        pycode: 'gb.wifi.mqttPub([TOPIC], [DATA])',
+    },
+    {
+        opcode: 'mqttread',
+        blockType: 'reporter',
+        text: "$$stemcft_mqttread",
+        arguments: {
+            TOPIC: {
+                type: 'string',
+                defaultValue: 'topic1',
+            }
+        },
+        pycode: 'gb.wifi.mqttRead([TOPIC])',
+    },
+    // '---',
+    // {
+    //     opcode: 'startble',
+    //     blockType: 'command',
+    //     text: "$$stemcft_startble",
+    //     arguments: {
+    //         REPL: {
+    //             type: 'string',
+    //             menu: 'onoff',
+    //             defaultValue: '0',
+    //         },
+    //     },
+    //     pycode: 'gb.ble.start([REPL])',
+    // },
+    // {
+    //     opcode: 'blewrite',
+    //     blockType: 'command',
+    //     text: "$$stemcft_blewrite",
+    //     arguments: {
+    //         DATA: {
+    //             type: 'string',
+    //             defaultValue: 'hello',
+    //         },
+    //     },
+    //     pycode: 'gb.ble.write([DATA])',
+    // },
+    // {
+    //     opcode: 'bleread',
+    //     blockType: 'reporter',
+    //     text: "$$stemcft_bleread",
+    //     disableMonitor: 1,
+    //     pycode: 'gb.ble.read(decode="utf8")',
+    // }
+  ],
+  menus: {
+    xyz: [
+      { text: 'X', value: 'X' },
+      { text: 'Y', value: 'Y' },
+      { text: 'Z', value: 'Z' }
+    ],  
+    button: [
+      { text: 'A', value: 'a' },
+      { text: 'B', value: 'b' },  
+    ],
+    motor: [
+      { text: '1', value: '1' },
+      { text: '2', value: '2' },  
+    ],
+    level: [
+      { text: '$$stemcft_menus_level_high', value: '1' },
+      { text: '$$stemcft_menus_level_low', value: '0' }
+    ],
+    onoff: [
+      { text: 'ON', value: '1' },
+      { text: 'OFF', value: '0' }
+    ],
+    padPin: [
+      { text: 'P1', value: 'p1' },
+      { text: 'P2', value: 'p2' },
+    ],
+	pixNum: [
+      { text: '1', value: '0' },
+      { text: '2', value: '1' },
+	  { text: '3', value: '2' },
+      { text: '4', value: '3' }	  
+    ],
+    pitchroll: [
+      { text: 'Pitch', value: 'pitch' },
+      { text: 'Roll', value: 'roll' },
+    ],
+    TONEMENU: [
+        { text: 'CORRECT', value: '1' },
+        { text: 'ERROR', value: '2' },
+        { text: 'NOTICE', value: '3' },
+        { text: 'BA_DING', value: '4' },
+        { text: 'JUMP_UP', value: '5' },
+        { text: 'JUMP_DOWN', value: '6' },
+        { text: 'POWER_UP', value: '7' },
+        { text: 'POWER_DOWN', value: '8' },
+        { text: 'BADDY', value: '9' },
+        { text: 'DADA', value: '10' },
+        { text: 'WAWA', value: '11' },
+        { text: 'PUNCHLINE', value: '12' },
+        { text: 'RING', value: '13' },
+        { text: 'FUNK', value: '14' },
+        { text: 'ENTERTAINER', value: '15' },
+        { text: 'ODE', value: '16' },
+        { text: 'WEDDING', value: '17' },
+        { text: 'BIRTHDAY', value: '18' },
+        { text: 'CHASE', value: '19' },
+        { text: 'BLUES', value: '20' },
+        { text: 'PRELUDE', value: '21' },
+        { text: 'NYAN', value: '22' }
+    ],
+    gesture: [
+        { text: "$$stemcft_menus_level_gesture_shake", value: 'shake' },
+        { text: "$$stemcft_menus_level_gesture_free-falling", value: 'freefall' },
+        { text: "$$stemcft_menus_level_gesture_upright", value: 'tilt_up' },
+        { text: "$$stemcft_menus_level_gesture_handstand", value: 'tilt_down' },
+        { text: "$$stemcft_menus_level_gesture_left-leaning", value: 'tilt_left' },
+        { text: "$$stemcft_menus_level_gesture_right-leaning", value: 'tilt_right' },
+        { text: "$$stemcft_menus_level_gesture_face-up", value: 'face_up' },
+        { text: "$$stemcft_menus_level_gesture_face-down", value: 'face_down' },
+    ],
+  }
+}

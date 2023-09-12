@@ -1,0 +1,86 @@
+{
+    "id": "scmicropy",
+    "version": "2.0.6",
+    "name": {
+        "en": "Grape:bit",
+        "zh-cn": "葡萄板"
+    },
+    "color1": "#A125B1",
+    "color2": "#792C91",
+    "color3": "#592C71",
+    "masterExt": "scmicropy",
+    "listdevice": {
+        "pid": 4097,
+        "vid": 12346,
+        "ble": {
+            "boardcast": "0x6e40",
+            "service": "6E400001-B5A3-F393-E0A9-E50E24DCCA9E",
+            "txChar": "6E400003-B5A3-F393-E0A9-E50E24DCCA9E",
+            "rxChar": "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
+        }
+    },
+    "connect": {
+        "no_reset": 1,
+        "wait": 5000
+    },
+    "io": [
+        "ble"
+    ],
+    "l10n": "stemcraft.l10n.json",
+    "type": "micropy",
+    "fwtype": "esptool",
+    "replmode": true,
+    "buildinpyb": true,
+    "listenusb": true,
+    "initcode": [
+        "from grapebit import *",
+        "gb.setRGB(BLACK,BLACK,BLACK,BLACK)",
+        "gb.buzz.melody(1)"
+    ],
+    "gen": {
+        "imports": {
+            "sc": "from grapebit import *"
+        }
+    },
+    "esptool": {
+        "fullerase": 1,
+        "extra": "--before usb_reset"
+    },
+    "firmwares": [
+        {
+            "file": "firmware.bin",
+            "address": "0x0"
+        }
+    ],
+    "kittenext": true,
+    "helplink": {
+        "kblock": "https://www.yuque.com/kittenbot/hardwares/grapebit-kittenblock",
+        "app": "https://www.yuque.com/kittenbot/software/controller-grapebit"
+    },
+    "errorhelper": {
+        "upload-firmware": "$$stemcft_uploadfirmware_errhelper",
+        "repl-mode": "$$stemcft_replmode_errhelper"
+    },
+    "tags": [
+        "hardware"
+    ],
+    "image": "grapebit.png",
+    "yuque": {
+        "slug": "kittenbot/gsc3r3"
+    },
+    "weights": 969,
+    "mainboard": true,
+    "docs": {
+        "产品介绍": "docs/产品介绍.md",
+        "💨快速开始": "docs/Kittenblock编程/💨快速开始.md",
+        "01 - 按键": "docs/Kittenblock编程/01 - 按键.md",
+        "02 - 触摸引脚": "docs/Kittenblock编程/02 - 触摸引脚.md",
+        "03 - 蜂鸣器": "docs/Kittenblock编程/03 - 蜂鸣器.md",
+        "04 - RGB彩灯": "docs/Kittenblock编程/04 - RGB彩灯.md",
+        "05 - 加速度计": "docs/Kittenblock编程/05 - 加速度计.md",
+        "06 - 电机": "docs/Kittenblock编程/06 - 电机.md",
+        "07 - Radio无线": "docs/Kittenblock编程/07 - Radio无线.md",
+        "08 - MQTT": "docs/Kittenblock编程/08 - MQTT.md",
+        "api": "docs/api.md"
+    }
+}
