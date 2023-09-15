@@ -49,15 +49,17 @@ def rgb_to_gray(r, g, b):
 
 
 def apply_sobel(img):
-    sobel_x = np.array([[1, 0, -1], [2, 0, -2], [1, 0, -1]])
-    sobel_y = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]])
+    sobel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
+    sobel_y = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]])
 
     gx = convolve2d(img, sobel_x)
     gy = convolve2d(img, sobel_y)
 
     mag = np.sqrt(gx**2 + gy**2)
 
-    return mag
+    mag_th = np.where(mag > 50, mag, 0)
+
+    return mag_th
 
 def detect_concentric_circles(bitmap565):
     r_channel, g_channel, b_channel = bitmap_to_numpy(bitmap565)
@@ -67,11 +69,7 @@ def detect_concentric_circles(bitmap565):
 
     edges = apply_sobel(gray)
     
-    condition = (edges > 0)
-    x_indices = np.where(condition, np.arange(edges.shape[0]), 0).flatten()
-    y_indices = np.where(condition, np.arange(edges.shape[1]), 0).flatten()
-    x_indices = x_indices[x_indices != 0]
-    y_indices = y_indices[y_indices != 0]
+    x_indices, y_indices = np.nonzero(edges)
 
     center = (int(np.mean(x_indices)), int(np.mean(y_indices)))
 
@@ -81,6 +79,7 @@ def detect_concentric_circles(bitmap565):
     radii = []
 
     for r in range(MIN_RADIUS, MAX_RADIUS):
+        print(r, hist[r])
         if hist[r] > hist[r-1] and hist[r] > hist[r+1]:
             radii.append(r)
 
